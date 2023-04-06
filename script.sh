@@ -21,3 +21,5 @@ tar -zcvf /tmp/artifacts.tar.gz "$WORK_DIR"
 rm -rf "$WORK_DIR"
 
 buildkite-agent artifact upload /tmp/artifacts.tar.gz
+
+rm /tmp/artifacts.tar.gz
