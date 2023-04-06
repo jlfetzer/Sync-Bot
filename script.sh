@@ -9,6 +9,10 @@ curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta
 webhook_url=$(aws secretsmanager get-secret-value --output text --query SecretString --secret-id slack_webhook_url --region us-east-1)
 curl -X POST -H 'Content-type: application/json' --data '{"text": "Buildkite did a thing"}' $webhook_url
 
-curl -L -o /tmp/master.zip https://github.com/fortra/impacket/archive/refs/heads/master.zip
+mkdir /tmp/synctools
 
-buildkite-agent artifact upload /tmp/master.zip
+git clone https://github.com/fortra/impacket.git /tmp/tempsync
+
+zip -r /tmp/artifacts.zip /tmp/tempsync
+
+buildkite-agent artifact upload /tmp/artifacts.zip
