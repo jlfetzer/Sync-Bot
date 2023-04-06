@@ -12,10 +12,12 @@ curl -X POST -H 'Content-type: application/json' --data '{"text": "Buildkite did
 
 #fetch repo
 
-mkdir /tmp/tempsync
+WORK_DIR=`mktemp -d -p "/tmp"`
 
-git clone https://github.com/fortra/impacket.git /tmp/tempsync
+git clone https://github.com/fortra/impacket.git "$WORK_DIR"
 
-tar -zcvf /tmp/artifacts.tar.gz /tmp/tempsync
+tar -zcvf /tmp/artifacts.tar.gz "$WORK_DIR"
 
 buildkite-agent artifact upload /tmp/artifacts.tar.gz
+
+rm -rf "$WORK_DIR"
