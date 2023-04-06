@@ -12,12 +12,10 @@ curl -X POST -H 'Content-type: application/json' --data '{"text": "Buildkite did
 
 #fetch repo
 
-sudo apt-get install -y zip
-
-mkdir /tmp/synctools
+mkdir /tmp/tempsync
 
 git clone https://github.com/fortra/impacket.git /tmp/tempsync
 
-zip -r /tmp/artifacts.zip /tmp/tempsync
+tar -zcvf /tmp/artifacts.tar.gz /tmp/tempsync
 
-buildkite-agent artifact upload /tmp/artifacts.zip
+buildkite-agent artifact upload /tmp/artifacts.tar.gz
