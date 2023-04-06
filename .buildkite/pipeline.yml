@@ -2,4 +2,4 @@ steps:
   - label: "Example Test"
     command: echo "Hello!"
   - label: "Run script"
-    command: script.sh"
+    command: "script.sh"
