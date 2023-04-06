@@ -18,6 +18,6 @@ git clone https://github.com/fortra/impacket.git "$WORK_DIR"
 
 tar -zcvf /tmp/artifacts.tar.gz "$WORK_DIR"
 
-buildkite-agent artifact upload /tmp/artifacts.tar.gz
-
 rm -rf "$WORK_DIR"
+
+buildkite-agent artifact upload /tmp/artifacts.tar.gz
