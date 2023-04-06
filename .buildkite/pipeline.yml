@@ -1,5 +1,7 @@
 steps:
   - label: "Example Test"
     command: echo "Hello!"
+  - label: "Installing zip"
+    command: apt-get -y install zip
   - label: "Run script"
     command: "script.sh"
