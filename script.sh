@@ -11,10 +11,10 @@ echo "RES is $RES"
 echo "ARCHIVE is $ARCHIVE"
 
 echo "Cloning into $WORK_DIR"
-git clone $REPO --single-branch $WORK_DIR
+git clone $REPO $WORK_DIR
 
 echo "archiving $WORK_DIR into $ARCHIVE"
-git archive -o "$ARCHIVE" $WORK_DIR
+git archive -o "$ARCHIVE" $WORK_DIR main
 
 echo "exporting env into $RES"
 env > $RES
