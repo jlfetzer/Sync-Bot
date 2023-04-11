@@ -1,5 +1,3 @@
 steps:
-  - label: "Example Test"
-    command: echo "Hello!"
-  - label: "Run script"
+  - label: "Run script :hammer:"
     command: "script.sh"
