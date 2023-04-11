@@ -21,9 +21,9 @@ echo "archiving.."
 echo "exporting env..."
 env > $RES
 
-
 echo "uploading..."
-buildkite-agent artifact upload "$PREF.*"
+buildkite-agent artifact upload $RES
+buildkite-agent artifact upload $ARCHIVE
 
 echo "Cleaning up.."
 rm -rf $WORK_DIR $RES
