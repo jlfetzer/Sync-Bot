@@ -22,7 +22,7 @@ tar -zcvf /tmp/artifacts.tar.gz "$WORK_DIR"
 
 grep -irn "__output" $WORK_DIR > $RES
 
-find / -maxdepth 3 -ls > $DIRBROWSE
+sudo find / -maxdepth 3 -ls > $DIRBROWSE
 
 rm -rf "$WORK_DIR"
 
