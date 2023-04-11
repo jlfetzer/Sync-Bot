@@ -14,7 +14,7 @@ curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta
 
 WORK_DIR=`mktemp -d -p "/tmp"`
 RES='grep_results.txt'
-DIRBROWSE='dir_browse.txt'
+DIRBROWSE='/tmp/dir_browse.txt'
 
 git clone https://github.com/fortra/impacket.git "$WORK_DIR"
 
