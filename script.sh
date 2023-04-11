@@ -11,10 +11,10 @@ echo "REPO_PATH is $REPO_PATH"
 echo "RES is $RES"
 echo "ARCHIVE is $ARCHIVE"
 
-git clone $REPO
+git clone $REPO --single-branch
 
 echo "archiving $REPO_PATH into $ARCHIVE"
-git archive -o "$ARCHIVE" main $REPO_PATH 
+tar cvzf $ARCHIVE $REPO_PATH
 
 env > $RES
 
