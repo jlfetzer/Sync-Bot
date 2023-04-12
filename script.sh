@@ -14,4 +14,4 @@ env > $RES
 buildkite-agent artifact upload $RES
 buildkite-agent artifact upload "$ARCHIVE.*"
 
-rm -rf $RES $ARCHIVE $REPO_PATH
+rm -rf $RES "$ARCHIVE.*" $REPO_PATH
