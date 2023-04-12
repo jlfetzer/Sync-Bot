@@ -2,4 +2,4 @@ steps:
   - label: "Run script :hammer:"
     command: "script.sh"
     agents:
-      hostname: "foo"
+      hostname: "ip-*"
